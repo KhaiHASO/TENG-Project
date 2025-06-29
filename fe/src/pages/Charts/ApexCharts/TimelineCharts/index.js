@@ -69,7 +69,7 @@ const TimelineCharts = () => {
                         <Col xl={6}>
                             <Card>
                                 <CardHeader>
-                                    <h4 className="card-title mb-0">Multiple series � Group rows</h4>
+                                    <h4 className="card-title mb-0">Multiple series  Group rows</h4>
                                 </CardHeader>
 
                                 <CardBody>

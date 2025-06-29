@@ -10,6 +10,8 @@ import Dashboardjob from "../pages/Dashboardjob/index"
 import DashboardCrypto from "../pages/DashboardCrypto";
 import DashboardProject from "../pages/DashboardProject";
 import DashboardNFT from "../pages/DashboardNFT";
+// Marine Sensor Dashboard
+import DashboardMarineSensor from "../pages/DashboardMarineSensor";
 
 //Calendar
 import MonthGrid from "../pages/Calendar/MonthGrid";
@@ -256,6 +258,7 @@ const authProtectedRoutes = [
   { path: "/dashboard-projects", component: <DashboardProject /> },
   { path: "/dashboard-nft", component: <DashboardNFT /> },
   { path: "/dashboard-blog", component: <DashboardBlog /> },  
+  { path: "/dashboard-marine-sensor", component: <DashboardMarineSensor /> },
 
   { path: "/apps-calendar", component: <Calendar /> },
   { path: "/apps-calendar-month-grid", component: <MonthGrid /> },

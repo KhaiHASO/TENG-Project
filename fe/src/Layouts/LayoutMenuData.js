@@ -202,6 +202,12 @@ const Navdata = () => {
           parentId: "dashboard",
         },
         {
+          id: "marine-sensor",
+          label: "Marine Sensor",
+          link: "/dashboard-marine-sensor",
+          parentId: "dashboard",
+        },
+        {
           id: "blog",
           label: "Blog",
           link: "/dashboard-blog",
