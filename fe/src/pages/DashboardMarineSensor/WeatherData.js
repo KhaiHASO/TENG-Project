@@ -14,10 +14,11 @@ const WeatherData = () => {
     };
 
     // Chart Color Arrays
-    const windSpeedChartColors = getChartColorsArray("#0ab39c");
-    const waveHeightChartColors = getChartColorsArray("#299cdb");
-    const waterTempChartColors = getChartColorsArray("#f06548");
-    const salinityChartColors = getChartColorsArray("#405189");
+    const windSpeedChartColors = getChartColorsArray('["#0ab39c"]');
+    const waveHeightChartColors = getChartColorsArray('["#299cdb"]');
+    const waterTempChartColors = getChartColorsArray('["#f06548"]');
+    const salinityChartColors = getChartColorsArray('["#405189"]');
+    
 
     // Wind Speed Chart
     const windSpeedOptions = {

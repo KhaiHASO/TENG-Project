@@ -12,9 +12,9 @@ const HistoricalData = () => {
     const toggleDropdown = () => setDropdownOpen(prevState => !prevState);
 
     // Chart color arrays for different chart types
-    const waveHeightColors = getChartColorsArray("#3577f1");
-    const windSpeedColors = getChartColorsArray("#0ab39c");
-    const waterTempColors = getChartColorsArray("#f7b84b");
+    const waveHeightColors = getChartColorsArray('["#3577f1"]');
+    const windSpeedColors = getChartColorsArray('["#0ab39c"]');
+    const waterTempColors = getChartColorsArray('["#f7b84b"]');
 
     // Time range options
     const timeRangeOptions = {

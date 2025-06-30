@@ -5,7 +5,7 @@ import getChartColorsArray from "../../Components/Common/ChartsDynamicColor";
 import ReactApexChart from 'react-apexcharts';
 
 const SensorHealthPanel = () => {
-    const chartRadialColors = getChartColorsArray("#0ab39c_#f06548_#ffbe0b");
+    const chartRadialColors = getChartColorsArray('["#0ab39c", "#f06548", "#ffbe0b"]');
 
     // Individual sensor data
     const sensors = [
