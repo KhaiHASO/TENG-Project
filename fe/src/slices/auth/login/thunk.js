@@ -11,6 +11,7 @@ export const loginUser = (user, history) => async (dispatch) => {
 
   try {
     let response;
+    console.log("process.env.REACT_APP_DEFAULTAUTH", process.env.REACT_APP_DEFAULTAUTH);
     if (process.env.REACT_APP_DEFAULTAUTH === "firebase") {
       let fireBaseBackend = getFirebaseBackend();
       response = fireBaseBackend.loginUser(
@@ -18,6 +19,7 @@ export const loginUser = (user, history) => async (dispatch) => {
         user.password
       );
     } else if (process.env.REACT_APP_DEFAULTAUTH === "jwt") {
+      console.log("đăng nhập jwt", response);
       response = postJwtLogin({
         email: user.email,
         password: user.password
