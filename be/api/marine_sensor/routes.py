@@ -1,5 +1,6 @@
 from flask import Blueprint, jsonify, request
-from .models import generate_sensor_data, get_sensor_health, get_sensor_locations
+from .models import get_sensor_locations
+import sensor_parser
 
 # Create a Blueprint for marine sensor routes
 marine_sensor_bp = Blueprint('marine_sensor', __name__)
@@ -10,7 +11,7 @@ def get_marine_sensor_data():
     if request.method == "OPTIONS":
         return "", 200
     
-    sensor_data = generate_sensor_data()
+    sensor_data = sensor_parser.generate_sensor_data()
     return jsonify(sensor_data)
 
 @marine_sensor_bp.route('/health', methods=['GET', 'OPTIONS'])
@@ -19,8 +20,8 @@ def get_marine_sensor_health():
     if request.method == "OPTIONS":
         return "", 200
     
-    sensors = get_sensor_health()
-    return jsonify({"sensors": sensors})
+    sensor_data = sensor_parser.get_sensor_health()
+    return jsonify(sensor_data)
 
 @marine_sensor_bp.route('/locations', methods=['GET', 'OPTIONS'])
 def get_marine_sensor_locations():
