@@ -2,19 +2,18 @@ import serial
 import struct
 from threading import Lock
 import time
+import datetime
+import sys
 
-OPEN_LITERAL = b"\xEF\xEF\xCD\xAB" 
-CLOSE_LITERAL = b"\x56\x56\x34\x12"
+if __name__ == "__main__":
+    import matplotlib.animation as animation
+    import matplotlib.pyplot as plt
+    import numpy as np
+    from matplotlib import use
 
-FORMAT = "<QH9H50H"
-DATA_PACKET_SIZE = 130
+OPEN_LITERAL = b"BEGIN_ADC" 
 
-FLOODING_MASK = (1 << 1)
-CONNECTION_MASK = (1 << 2)
 
-STRUCT_LIST_BUFFER = 1000
-
-RX_TIMEOUT = 10
 
 Flooded = False
 Receiver_Connected = False
@@ -25,12 +24,19 @@ struct_list = []
 ser = None
 lock = Lock()
 
+b = bytes()
+buf = []
+x_data, y_data = [], []
+fig = plt.figure()
+j = 0
+line, = plt.plot(x_data, y_data, '-')
+file = None
+ser = None
+if __name__ == "__main__":
+    file = open(f"log_{datetime.datetime.now()}{time.monotonic()}", "at")
 
 def init_sensor_parser():
-    ser = serial.Serial()
-    ser.baudrate = 115200
-    ser.port = "/dev/ttyUSB0"
-    ser.timeout = RX_TIMEOUT
+    ser = serial.Serial(sys.argv[1], baudrate=115200, timeout=10)
 
     while ser.is_open == False :
         ser.open()
@@ -38,7 +44,7 @@ def init_sensor_parser():
             ser.baudrate = int(input("Baudrate: "))
             ser.port = input("Input port: ")
     
-    a = ser.read_until(OPEN_LITERAL, DATA_PACKET_SIZE) # Flush the first (may be incompleted) packet
+    a = ser.read_until(OPEN_LITERAL) # Flush the first (may be incompleted) packet
 
     
     Receiver_Connected = (len(a) != 0)
@@ -81,3 +87,30 @@ def get_sensor_health():
     return_dict["sensor_health":Wireless_Connected]
     return_dict["flooding":Flooded]
     return return_dict
+
+def __get_data(frame):
+    global j
+    b = ser.read_until(OPEN_LITERAL)
+    print(b)
+    if len(b) == 0:
+        print("No signal !!!")
+        return
+    #buf.clear()
+    y_data.clear()
+    x_data.clear()
+    for  i in range(0, (len(b) - len(b"BEGIN_ADC"))//2 - 100):
+        y_data.append(int.from_bytes(b[i * 2 + 1: i*2+3], byteorder='big'))
+        x_data.append(j)
+        j += 1
+    print(y_data)
+    line.set_data(x_data, y_data)
+    print(f"{datetime.datetime.now()}, {time.monotonic_ns()}", sep='\n', file=file)
+    print(y_data, sep='\n', file=file)
+    fig.gca().relim()
+    fig.gca().autoscale_view()
+    return line,
+
+if __name__ == "__main__":
+    ani = animation.FuncAnimation(fig = fig, func=__get_data, interval = 10)
+    plt.show()
+    ser.close()
